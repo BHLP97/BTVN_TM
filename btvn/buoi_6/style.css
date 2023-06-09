@@ -1,0 +1,89 @@
+body{
+    height: 100vh;
+    box-sizing: border-box;
+    background-color: #F4F4F4 !important;
+}
+.div_card{
+    display:flex;
+    flex-direction: column;
+    width: 300px;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 100px;
+    box-shadow: 0px 6px 15px 3px rgb(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+}
+.div_card:hover .text{
+    height: 100px;
+    transition: height 1s;
+}
+.div_card:hover img{
+    opacity: 0.6;
+    transform: scale(1.25);
+    transition: opacity 1s, transform 1s;
+}
+.card_image{
+    position: relative;
+    border: none;
+    flex: 1;
+}
+.dark_filter{
+    width:100%;
+    height:100%;
+    position:absolute;
+    background-color: black;
+    display: hidden;
+}
+img{
+    position:absolute;
+    object-fit: fill;
+    height: 400px;
+}
+.circle{
+    position:absolute;
+    border:none;
+    width: 50px;
+    height: 50px;
+    background-color: #FF5542;
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    top: 15px;
+    right: 15px;
+}
+.rect{
+    position:absolute;
+    background-color: #FF5542;
+    color: white;
+    border: none;
+    bottom:0;
+}
+.content{
+    position: relative;
+    background-color: white;
+    padding: 25px;
+    bottom: 0;
+}
+.card_header{
+    margin-bottom: 10px;
+}
+.title{
+    font-size: 22px;
+    font-weight: bold;
+}
+.sub_title{
+    font-size: large;
+    color: #FF5542;;
+}
+.text{
+    font-size: small;
+    overflow: hidden;
+    height: 0px;
+} 
+.card_footer{
+    margin-top: 10px;
+    font-size: 12px;
+    color: #b39393;
+    bottom: 0px;
+}
