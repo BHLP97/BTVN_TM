@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
+    <style type="text/css">
+        @keyframes beating {
+            from {
+                scale: 1;
+            }
+            50% {
+                scale: 1.5;
+                filter: drop-shadow(0px 10px 5px rgb(0, 0, 0, 0.3));
+            }
+            to {
+                scale: 1;
+            }
+        }
+        @keyframes spreading {
+            from {
+                scale: 1;
+                opacity: 0.5;
+            }
+            to {
+                scale: 1.5;
+                opacity: 0;
+            }
+        }
+        @keyframes waving {
+            from {
+                transform: translateY(0px);
+            }
+            10% {
+                transform: translateY(-20px);
+            }
+            20%,100% {
+                transform: translateY(0px);
+            }
+        }
+        body{
+            box-sizing: border-box;
+            background-color: #FF6C61;
+        }
+        .container{
+            display:flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .heart{
+            font-size: 242px;
+            color: white;
+            margin: 0 auto;
+            animation: beating 1s infinite;
+            margin-bottom: 200px;
+            margin-top: 100px;
+        }
+        .spread{
+            align-self: center;
+            position: absolute;
+            animation: spreading 0.5s infinite;
+            animation-delay: 0.5s;
+        }
+        .wave{
+            color: white;
+            margin: 0 auto;
+            font-size: 42px;
+        }
+        .wave span {
+            display: inline-block;
+            animation: waving 2s ease-in-out infinite;
+            animation-delay: calc(0.1s * var(--i));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <i class="fa fa-heart heart spread" aria-hidden="true"></i>
+        <i class="fa fa-heart heart" aria-hidden="true"></i>
+        <div class="wave">
+            <span style="--i:1;">I</span>
+            <span style="--i:2;"></span>
+            <span style="--i:3;">l</span>
+            <span style="--i:4;">o</span>
+            <span style="--i:5;">v</span>
+            <span style="--i:6;">e</span>
+            <span style="--i:7;"></span>
+            <span style="--i:8;">t</span>
+            <span style="--i:9;">h</span>
+            <span style="--i:10;">i</span>
+            <span style="--i:11;">s</span>
+            <span style="--i:12;">!</span>
+        </div>
+    </div>   
+</body>
+</html>
