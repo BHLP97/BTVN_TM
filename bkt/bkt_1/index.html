@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Bài kiểm tra HTML CSS Cơ Bản</title>
+    <style type="text/css">
+        body{
+            box-sizing: border-box;
+            font-family: 'Inter';
+            margin: 0;
+            background-color: #F5F5F5;
+        }
+        .row{
+            display:flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+        }
+        .flex1 {
+            flex: 1;
+        }
+        .flex-center{
+            align-items: center;
+            justify-content: center;
+        }
+        .flex-end{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+        }
+        .spaced-even{
+            justify-content: space-evenly;
+        }
+
+        /* Header style__________________________________________________________________________ */
+        header{
+            display:block;
+            background: #F5F5F5;
+            position: fixed;
+            width: 100%;
+            z-index: 3;
+        }
+        .header_container{
+            display:flex;
+            flex-direction: row;
+            align-items: center;
+            width: calc(100% - 100px);
+            margin: 0 50px; 
+        }
+        hr{
+            width: calc(100% - 100px);
+            border: 1px solid rgba(254, 254, 254, 0.16);
+        }
+        header div{
+            flex: 1;
+        }
+        header i{
+            font-size: 30px !important;
+        }
+        header hr{
+            margin-bottom: 0;
+        }
+        .header_element{
+            position: relative;
+            flex: 0 0 200px;
+            align-items: end;
+            top: -20px;
+        }
+        .header_title{
+            margin: 0 auto;
+            position: relative;
+            font-weight: 500;
+            font-size: 40px;
+            text-align: center;
+            top: 10px;
+        }
+        .header_text{
+            margin-left: 20px;
+        }
+
+        /* Main style__________________________________________________________________________ */
+        main{
+            padding-top: 95px;
+        }
+        /* main div{
+            margin: 10px 50px 40px 50px;
+        } */
+        .main_image{
+            max-width: 100%;
+            margin: 30px 50px 75px 50px;
+            width: calc(100% - 100px);
+        }
+        .title{
+            margin: 10px 0;
+            margin-left: 50px;
+            font-weight: 900;
+        }
+        .sort{
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            margin-right: 50px;
+        }
+        .filter{
+            margin-left: 20px;
+            border-radius: 5px;
+            padding: 5px 30px 5px 5px;
+            background-color: #F5F5F5;
+        }
+        .card{
+            position: relative;
+            overflow: hidden;
+        }
+        .card_image{
+            object-fit: cover;
+            position: relative;
+            margin-bottom: 10px;
+            width: 320px;
+            height: 340px;
+        }
+        .card_rect{
+            width: 37px;
+            height: 27px;
+            margin: 0 10px 10px 0;
+            border: 1px solid #000000;
+            border-radius: 5px;
+        }
+        .r1{
+            background: #000000;
+            margin-left: 0;
+        }
+        .r2{
+            background: #FFFFFF;
+        }
+        .r3{
+            background: #BFECFF;
+        }
+        .card_title{
+            margin-bottom: 5px;
+        }
+        .card_price{
+            font-weight: 900;
+        }
+        .row button{
+            margin: 30px auto;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 5px 50px;
+        }
+        .article1_image{
+            width: 1100px;
+            height: 860px;
+            position: relative;
+            object-fit: cover;
+            overflow: hidden;
+        }
+        .card_article{
+            position: absolute;
+            background-color: white;
+            border: 2px solid black;
+            width: 55%;
+            right: 50px;
+            margin-top: 100px;
+        }
+        .card_article2{
+            width: 40%;
+        }
+        .card_article_title{
+            font-size: 60px;
+            font-weight: 500;
+            padding: 20px;
+        }
+        .card_article_title2{
+            font-size: 60px;
+            font-weight: 500;
+            margin-left: 50px;
+        }
+        .card_content{
+            font-size: 25px;
+            margin: 0 0 20px 50px;
+            padding: 10px;
+            line-height: 45px;
+        }
+        .col_image{
+            overflow: hidden;
+            position: relative;
+            margin: 0 50px;
+        }
+        .image_container{
+            display: flex;
+        }
+        .article2_image{
+            position: relative;
+            object-fit: cover;
+            left: -35%;
+            z-index: -1;
+        }
+        .image_text{
+            position: absolute;
+            color:white;
+            width: 350px;
+            font-size: 30px;
+            z-index: 2;
+            text-align: center;
+        }
+        .filter_dark{
+            position: absolute;
+            width: 100%;
+            height: 760px;
+            background-color: black;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* Footer style__________________________________________________________________________ */
+        footer{
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+        .footer_title{
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 40px;
+            text-align: center;
+            margin: 50px 0 25px 0;
+        }
+        .footer_col{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+        .footer_text{
+            margin: 20px 0;
+        }
+        .footer_bold{
+            font-weight: 900;
+            font-size: 14px;
+            margin: 0 0 0 10px; 
+        }
+        .footer_subtext{
+            margin: 0 50px 0 10px;
+            font-size: 12px;
+        }
+        .footer_button{
+            background: #212121;
+            margin: 20px 0 !important;
+            width: 180px;
+            padding: 5px 10px !important;
+            border: 2px solid #FFFFFF !important;
+            color: white;
+            height: 50px;
+        }
+        .button_title{
+            font-size: 14px;
+        }
+        .button_subtitle{
+            font-size: 8px;
+        }
+        footer i{
+            border: 1px solid white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header_title">
+            <strong>MOSI</strong>
+        </div>
+        <div class="header_container">
+            <div class="header_element row">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+                <div class="header_text">
+                    Menu
+                </div>
+            </div>
+            <div class="header_element row">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <div class="header_text">
+                    Search
+                </div>
+            </div>
+            <div class="header_placeholder">
+                
+            </div>
+            <div class="header_element row">
+                <div class="flex-end" style="font-style: italic; margin-right: 20px">
+                    My Masi
+                </div>
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </div>
+        </div>
+        <hr>
+    </header>
+    <main>
+        <div>
+            <img src="images/main_ad.png" alt="World Cup Uniform Advertisement" class="main_image">
+        </div>
+        <div class="row">
+            <div class="title flex1">
+                <strong>TOÀN BỘ SẢN PHẨM</strong>
+            </div>
+            <div class="sort flex1">
+                <strong>SẮP XẾP</strong>
+                <select class="filter">
+                    <option value="">Mới nhất</option>
+                </select>
+            </div>
+        </div>
+        <div class="row spaced-even" style="margin: 0 0 70px 50px">
+            <div class="card flex1">
+                <img src="images/card_image1.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card flex1">
+                <img src="images/card_image4.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card flex1">
+                <img src="images/card_image3.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card flex1">
+                <img src="images/card_image2.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+        </div>
+        <div class="row spaced-even">
+            <div class="card">
+                <img src="images/card_image3.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/card_image1.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/card_image2.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/card_image4.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+        </div>
+        <div class="row center">
+            <button>
+                <strong>
+                    XEM THÊM
+                </strong>
+            </button>
+        </div>
+        <div class="row">
+            <img src="images/article1_image.png" alt="article1_image" class="article1_image">
+            <div class="card_article">
+                <div class="card_article_title">
+                    TỰ TIN BỨT PHÁ PHONG CÁCH RIÊNG
+                </div>
+                <div class="card_content">
+                    Mỗi người trong chúng ta đều có phần cá tính muốn thể hiện ra ngoài, riêng cái cách thể hiện phần cá tính đó cũng đều rất khác nhau giữa chúng ta. Chính sự đa dạng đó làm nên sự tuyệt vời của xã hội và cuộc sống này, bạn hãy là bạn, hãy tỏa sức lan tỏa phong cách riêng của bạn. 
+                    <br>
+                    Hâm mộ ai, tâm trạng bạn như thế nào, triết lý sống của ban là gì... Bất kì là cái gì, xin hãy để masi giúp đỡ bạn một chút
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 50px 0 10px 0">
+            <div class="title flex1">
+                <strong>SẢN PHẨM MỚI</strong>
+            </div>
+        </div>
+        <div class="row spaced-even" style="margin: 0 0 30px 50px">
+            <div class="card flex1">
+                <img src="images/card_image1.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                    <div class="flex-end flex1" style="margin-right: 50px">Đã bán 1.2k</div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card flex1">
+                <img src="images/card_image4.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card flex1">
+                <img src="images/card_image3.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+            <div class="card flex1">
+                <img src="images/card_image2.png" alt="" class="card_image">
+                <div class="row">
+                    <div class="card_rect r1"></div>
+                    <div class="card_rect r2"></div>
+                    <div class="card_rect r3"></div>
+                </div>
+                <div class="card_title">
+                    Áo phông Masi Basic 1 dáng Loose Fit 
+                </div>
+                <div class="card_price">
+                    280.000đ 
+                </div>
+            </div>
+        </div>
+        <div class="row center">
+            <button>
+                <strong>
+                    XEM THÊM
+                </strong>
+            </button>
+        </div>
+        <div class="row">
+            <div class="card_article2">
+                <div class="card_article_title2">
+                    TỰ TIN BỨT PHÁ PHONG CÁCH RIÊNG
+                </div>
+                <div class="card_content" style="padding: 0; margin: 20px 0 20px 50px">
+                    Mỗi người trong chúng ta đều có phần cá tính muốn thể hiện ra ngoài, riêng cái cách thể hiện phần cá tính đó cũng đều rất khác nhau giữa chúng ta. Chính sự đa dạng đó làm nên sự tuyệt vời của xã hội và cuộc sống này, bạn hãy là bạn, hãy tỏa sức lan tỏa phong cách riêng của bạn. 
+                    <br>
+                    Hâm mộ ai, tâm trạng bạn như thế nào, triết lý sống của ban là gì... Bất kì là cái gì, xin hãy để masi giúp đỡ bạn một chút
+                </div>
+                <div class="row center">
+                    <button>
+                        TỰ DESIGN
+                    </button>
+                </div>
+            </div>
+            <div class="col_image flex1">
+                <div class="image_container flex-center">
+                    <div class="image_text">
+                        VIDEO NÀO ĐÓ, <br> HOẶC POSTER NÀO ĐÓ
+                    </div>
+                    <div class="filter_dark">
+
+                    </div>
+                    <img src="images/main_ad.png" alt="article2 video or poster" class="article2_image" >
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer_title">
+            MOSI
+        </div>
+        <hr>
+        <div class="row spaced-even">
+            <div class="footer_col flex-center">
+                <div class="footer_text">
+                    Chính sách hoạt động
+                </div>
+                <div class="footer_text">
+                    Chính sách đổi trả
+                </div>
+                <div class="footer_text">
+                    Chính sách giao hàng
+                </div>
+            </div>
+            <div class="footer_col flex-center">
+                <div class="footer_text">
+                    Thiết kế riêng với Masi
+                </div>
+                <div class="footer_text">
+                    Các dịch vụ khác
+                </div>
+                <div class="footer_text">
+                    Hướng dẫn sử dụng
+                </div>
+            </div>
+            <div class="footer_col flex-center">
+                <div class="footer_text">
+                    Blogs
+                </div>
+                <div class="footer_text">
+                    Hỏi đáp - FAGs
+                </div>
+                <div class="footer_text">
+                    Chăm sóc khách hàng
+                </div>
+            </div>
+            <div class="footer_col flex-center">
+                <div class="footer_text">
+                    Tuyển dụng
+                </div>
+                <div class="footer_text">
+                    Hợp tác kinh doanh
+                </div>
+                <div class="footer_text">
+                    
+                </div>
+            </div>
+            <div class="footer_col">
+                <button class="footer_button">
+                    <div class="button_title">
+                        <strong>
+                            Gửi Phản Hồi 
+                        </strong>
+                    </div>
+                    <div class="button_subtitle">
+                        chúng tôi luôn mong đợi ý kiến từ bạn
+                    </div>
+                </button>
+                <div class="row">
+                    <i class="fa fa-phone flex-center" aria-hidden="true"></i>
+                    <div class="footer_col">
+                        <div class="footer_bold">
+                            <strong>
+                                Hotline
+                            </strong>
+                        </div>
+                        <div class="footer_subtext">
+                            (+84) 866 394 681
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <i class="fa fa-envelope flex-center" aria-hidden="true"></i>
+                    <div class="footer_col">
+                        <div class="footer_bold">
+                            <strong>
+                                Email
+                            </strong>
+                        </div>
+                        <div class="footer_subtext">
+                            masi@storemasi.com
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <i class="fa fa-map-marker flex-center" aria-hidden="true"></i>
+                    <div class="footer_col">
+                        <div class="footer_bold">
+                            <strong>
+                                Địa chỉ
+                            </strong>
+                        </div>
+                        <div class="footer_subtext">
+                            9/71/17/4 Vân Canh, Hoài Đức, HN
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
