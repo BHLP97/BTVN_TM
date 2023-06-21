@@ -26,7 +26,7 @@ function sumNumber(a, b, c){
 function gradeNumber(a){
     if(a >= 85) return 'A'
     else if(a >= 70) return 'B'
-    else if('a' >= 45) return 'C'
+    else if(a >= 45) return 'C'
     else {return 'D'}
 }
 
