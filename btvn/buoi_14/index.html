@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //Bài 1
+        function findMax(array){
+            let max = array[0];
+            for(let i = 0; i < array.length; i++)
+                if(array[i] > max) max = array[i];
+            return max;
+        }
+            
+        //Bài 2
+        function findMin(array){
+            let min = array[0];
+            for(let i = 0; i < array.length; i++)
+                if(array[i] < min) min = array[i];
+            return min;
+        }
+
+        //Bài 3
+        function getModulo2(array){
+            let res = [];
+            for(let i = 0; i < array.length; i++)
+                res.push(array[i]%2);
+            return res;
+        }
+
+        //Bài 4
+        function repeatString(string){
+            let array = [string];
+            for(let i = 1; i <= 10; i++){
+                array.push(string);
+            }
+            return array.join(' ');
+        }
+
+        //Bài 5
+        function repeatString2(string){
+            let array = [string];
+            for(let i = 1; i <= 10; i++){
+                array.push(string);
+            }
+            return array.join('_');
+        }
+
+        console.log(findMax([3,-5,10]),findMin([3,-5,10]),getModulo2([3,-5,10]), repeatString('Haha'), repeatString2('Haha'));
+    </script>
+</body>
+</html>
