@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //Bài 1
+        /*
+        B1: Ban đầu gán số lớn nhất bằng phần tử đầu tiên trong mảng và số lần thứ nhì bằng 0
+
+        B2: Sử dụng vòng lặp qua mảng arr.
+        Nếu giá trị nào của vòng lặp > max1, thì gán lại giá trị của max1 bằng giá trị đó và giá trị của max2 bằng giá trị cũ của max1
+        Nếu giá trị nào của vòng lặp < max1 nhưng > max2 gán lại giá trị của max2 bằng giá trị đó (quan trọng cho trường hợp array với 2 phần tử thôi chẳng hạn)
+        Cứ tiếp tục công việc đến khi kết thúc vòng lặp
+
+        B3: Ra khỏi vòng lặp trả về kết quả của max2
+        */
+        const max2Numbers = (array) =>{
+            max1 = array[0];
+            max2 = 0;
+            for(let i = 1; i < array.length; i++){
+                if(array[i] > max1) [max1, max2] = [array[i], max1];
+                else if(array[i] < max1 && array[i] > max2) max2 = array[i];
+            }
+            return max2;
+        }
+        
+        //Bài 2
+        /*
+        B1: Ban đầu gán độ dài lớn nhất bằng 0
+
+        B2: Sử dụng vòng lặp qua mảng arr.
+        Nếu độ dài nào của vòng lặp > maxLength, thì gán lại giá trị của maxLength bằng giá trị đó
+        Cứ tiếp tục công việc đến khi kết thúc vòng lặp
+
+        B3: Ra khỏi vòng lặp trả về kết quả sau khi filter theo độ dài lấn nhất trong mảng
+        */
+        const getStringHasMaxLength = (array) =>{
+            maxLength = 0;
+            for(let i = 0; i < array.length; i++){
+                if(array[i].length > maxLength) maxLength = array[i].length; 
+            }
+            return array.filter((e) => e.length === maxLength);
+        }
+
+        //Bài 3
+        /*
+        B1: Chỉ cần lấy phần tử trong array với index bằng một số nguyên ngẫu nhiển thấp hơn độ dài của array 
+        */
+        const getRandomElement = (array) =>{
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        //Bài 4
+        /*
+        B1
+        */
+        const similarity = (array1, array2) =>{
+            let arraySim = []; 
+            array1.forEach(element => {
+                if(array2.indexOf(element) != -1) arraySim.push(element);
+            })
+            return arraySim;
+       } 
+
+       //Bài 5
+       /*
+        B1: Quy đổi ra thời gian từ hh:mm:ss ra giây (giá trị của totalSeconds)
+
+        B2: tính toán
+
+        B3: Quy đổi ngược lại từ giây ra hh:mm:ss (giá trị của res)
+        */
+        const getTime = (time, seconds) => {
+            let hours = time.slice(0,1);
+            let mins = time.slice(2,4);
+            let secs = time.slice(5,7);
+            let totalSeconds = parseInt(hours)*3600 + parseInt(mins)*60 + parseInt(secs)
+            let res = totalSeconds + parseInt(seconds);
+            let newHours = Math.floor(res/3600);
+            let newMinutes = Math.floor((res - newHours*3600)/60);
+            let newSeconds = res - newHours*3600 - newMinutes*60;
+            return `${newHours}:${newMinutes}:${newSeconds}`;
+        } 
+
+        //Bài 6
+        /*
+        B1: 
+        */
+        const getUsers1 = (arrayObject) => {
+            let res = arrayObject.filter((e) => e.age > 25 && e.isStatus === true);
+            console.log(res);
+        }
+        const getUsers2 = (arrayObject) => {
+            let res = arrayObject.sort((e1, e2) => e1.age - e2.age);
+            console.log(res);
+        }
+
+        //Bài 7
+        /*
+        B1: Em ko có thời gian để biết em viết sai ở chỗ nào =(
+        */
+        const getCountElement = (array) => {
+            let objectRes = {};
+            array.forEach((e) => {
+                if(objectRes[e]) {
+                    objectRes[e] += 1;
+                } else {
+                    objectRes.e = 1;
+                }
+            })
+            return objectRes;
+        }
+
+        console.log(
+            max2Numbers([2, 1, 4, 3, 4]),
+            getStringHasMaxLength(['aba', 'aa', 'ad', 'c', 'vcd']),
+            getRandomElement([3, 7, 9, 11]),
+            similarity([1, 2, 3], [1, 2, 4]),
+            getTime("9:20:56", 7)
+        );
+
+        users = [
+            {
+                name: "Bùi Công Sơn",
+                age: 30,
+                isStatus: true
+            },
+            {
+                name: "Nguyễn Thu Hằng",
+                age: 27,
+                isStatus: false
+            },
+            {
+                name: "Phạm Văn Dũng",
+                age: 20,
+                isStatus: false
+            }
+        ]
+
+        console.log(
+            getUsers1(users),
+            getUsers2(users),
+            getCountElement(["one", "two", "three", "one", "one", "three"])
+        );
+
+    </script>
+</body>
+</html>
