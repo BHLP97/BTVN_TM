@@ -57,7 +57,13 @@
 
         //Bài 4
         /*
-        B1
+        B1: Ban đầu khởi tạo mảng rỗng arraySim
+
+        B2: Sử dụng vòng lặp forEach qua mảng array thứ nhất.
+        Nếu bất kỳ element nào đó có index trong array số hai thì mình có thể đẩy về mảng kết quả đc
+        Cứ tiếp tục công việc đến khi kết thúc vòng lặp
+
+        B3: Ra khỏi vòng lặp trả về mảng kết quả  
         */
         const similarity = (array1, array2) =>{
             let arraySim = []; 
@@ -71,9 +77,9 @@
        /*
         B1: Quy đổi ra thời gian từ hh:mm:ss ra giây (giá trị của totalSeconds)
 
-        B2: tính toán
+        B2: Tính thời gian mới bằng giây (totalSeconds cộng seconds)
 
-        B3: Quy đổi ngược lại từ giây ra hh:mm:ss (giá trị của res)
+        B3: Quy đổi ngược lại từ giây ra hh:mm:ss (trả về kết quả bằng string)
         */
         const getTime = (time, seconds) => {
             let hours = time.slice(0,1);
@@ -89,7 +95,7 @@
 
         //Bài 6
         /*
-        B1: 
+        B1: Chỉ cần dùng filter và sort để trả về mảng kết quả theo hướng dẫn của bài ạ
         */
         const getUsers1 = (arrayObject) => {
             let res = arrayObject.filter((e) => e.age > 25 && e.isStatus === true);
