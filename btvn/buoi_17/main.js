@@ -33,3 +33,23 @@ p2.insertAdjacentElement("beforebegin", p2_copy);
 const p1 = document.querySelector('.para-1'); 
 p1.parentElement.removeChild(p1);
 
+//Câu 1
+const text = document.querySelector('#text');
+text.style.color = '#777';
+text.style.fontSize = '2rem';
+text.innerHTML = "Tôi có thể làm <em> bất cứ điều gì </em> tôi muốn với JavaScript."
+
+//Câu 2
+const ul = document.querySelector('ul');
+ul.style.color = 'blue';
+
+//Câu 3
+const list = document.querySelector('#list');
+list.insertAdjacentHTML('beforeend', "<li>Item 8</li><li>Item 9</li><li>Item 10</li>")
+const li1 = list.querySelector('li');
+li1.style.color = 'red';
+const li3 = list.querySelector('li:nth-child(3)');
+li3.style.color = 'green';
+const li4 = list.querySelector('li:nth-child(4)');
+li4.insertAdjacentHTML('afterend', "<li>Copy of Item 4</li>")
+list.removeChild(li4);
