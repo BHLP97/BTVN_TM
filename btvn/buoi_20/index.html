@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+    <style>
+        .active{
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <h1>TodoList App</h1>
+    <input type="text" placeholder="Enter title...">
+    <button id="btn-add" onclick="addTodo()">Add</button>
+
+    <ul>
+        <!-- <li id="1">
+            <input type="checkbox">
+            <span>Đi chơi</span>
+            <button id="btn-edit">Edit</button>
+            <button id="btn-delete">Delete</button>
+        </li>
+        <li id="2">
+            <input type="checkbox">
+            <span>Học bài</span>
+            <button id="btn-edit">Edit</button>
+            <button id="btn-delete">Delete</button>
+        </li>
+        <li id="3">
+            <input type="checkbox">
+            <span>Đi bơi</span>
+            <button id="btn-edit">Edit</button>
+            <button id="btn-delete">Delete</button>
+        </li> -->
+    </ul>
+    
+    <script>
+        const saveData = () =>{
+            localStorage.setItem('todoList', JSON.stringify(todoList));
+        }
+        const getData = () =>{
+            const value = localStorage.getItem('todoList');
+            if (value){
+                return JSON.parse(value);
+            }
+            return [];
+        }
+        let todoList = getData();
+        /* let todoList = [
+            {
+                id: 1,
+                title: "Đi chơi",
+                status: true,
+            },
+            {
+                id: 2,
+                title: "Học bài",
+                status: false,
+            },
+            {
+                id: 3,
+                title: "Đi bơi",
+                status: true,
+            }
+        ] */
+        const ul = document.querySelector('ul'); 
+        const renderToDoList = arr =>{
+            if(todoList.length != 0){
+                todoList.forEach((elem, i) =>{
+                    let html = `
+                    <li id="${i+1}">
+                        <input ${(elem.status == true) ? 'checked="checked"' : ''}" onclick="changeStatus(${i+1})" type="checkbox">
+                        <span class="${(elem.status == true) ? 'active' : ''}">${elem.title}</span>
+                        <button id="btn-edit" onclick="editTodo(${i+1})">Edit</button>
+                        <button id="btn-delete" onclick="removeTodo(${i+1})">Delete</button>
+                    </li>
+                    `
+                    ul.innerHTML += html;
+                })
+            } else {
+                ul.innerHTML += '<span id="notodos">Danh sách ko có todo nào</span>';
+            }
+            
+        }
+        const findMaxID = arr =>{
+            if(todoList.length === 0) return 1;
+            return Math.max(...todoList.map(t => t.id));
+        }
+        const addTodo = () =>{
+            let inputTitle = document.querySelector('input').value;
+            let notodos = document.querySelector('#notodos');
+            if(notodos) notodos.parentElement.removeChild(notodos);
+            let index = findMaxID(todoList)+1;
+            if (inputTitle){
+                let html = `
+                <li class="" id="${index}">
+                    <input onclick="changeStatus(${index})" type="checkbox">
+                    <span>${inputTitle}</span>
+                    <button id="btn-edit" onclick="editTodo(${index})">Edit</button>
+                    <button id="btn-delete" onclick="removeTodo(${index})">Delete</button>
+                </li>
+                `
+                ul.innerHTML += html;
+                todoList.push({
+                    id: index,
+                    title: `${inputTitle}`,
+                    status: false,
+                })
+                saveData();
+            } else {
+                alert ('Tên công việc không được để trống');
+            }
+        }
+        const removeTodo = (id) =>{
+            if (window.confirm("Do you really want to delete?")){
+                let ulRemoved = document.getElementById(id);
+                ulRemoved.parentElement.removeChild(ulRemoved);
+                todoList.shift(ulRemoved);
+                saveData();
+            }
+            if(todoList.length === 0) ul.innerHTML += '<span id="notodos">Danh sách ko có todo nào</span>'; 
+        }
+        const editTodo = (id) =>{
+            let newTitle = window.prompt("What should the new title be?");
+            if(newTitle){
+                let ulEdited = document.getElementById(id);
+                let ulTitle = ulEdited.querySelector('span');
+                ulTitle.innerHTML = newTitle;
+                let todo = todoList.find(o => o.id == id);
+                todo.title = newTitle;
+                saveData();
+            }
+        }
+        const changeStatus = (id) =>{
+            let ulChanged = document.getElementById(id);
+            let ulTitle = ulChanged.querySelector('span');
+            ulTitle.classList.toggle('active');
+            let todo = todoList.find(o => o.id == id);
+            todo.status = (todo.status == false) ? true : false;
+            saveData();
+        }
+        
+        renderToDoList(todoList);
+    </script>
+</body>
+</html>
