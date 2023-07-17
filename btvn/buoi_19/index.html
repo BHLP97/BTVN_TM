@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Thay đổi background tương ứng trong class "testimonials-container" -->
+    <div class="testimonials-container">
+        <i class="fas fa-quote-left"></i>
+
+        <!-- Nội dung quote hiển thị ở đây -->
+        <p class="text"></p>
+
+        <!-- Tên tác giả hiển thị ở đây -->
+        <strong class="name"></strong>
+
+        <div class="authors-container">
+            <div class="author selected"><img src="https://randomuser.me/api/portraits/men/41.jpg" alt=""></div>
+            <div class="author"><img src="https://randomuser.me/api/portraits/women/50.jpg" alt=""></div>
+            <div class="author"><img src="https://randomuser.me/api/portraits/women/22.jpg" alt=""></div>
+            <div class="author"><img src="https://randomuser.me/api/portraits/women/76.jpg" alt=""></div>
+            <div class="author"><img src="https://randomuser.me/api/portraits/men/17.jpg" alt=""></div>
+        </div>
+    </div>
+    <script>
+        const authorList = [
+            {
+                name: "Adrian HickleWick",
+                quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                image: "https://randomuser.me/api/portraits/men/41.jpg",
+                color: "purple"
+            },
+            {
+                name: "Bob Schnitzelhaus",
+                quote: "Egestas purus viverra accumsan in nisl nisi scelerisque eu. Faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget. In arcu cursus euismod quis viverra nibh cras. Morbi tempus iaculis urna id. Purus semper eget duis at tellus at urna. Ac turpis egestas sed tempus urna et. Tortor vitae purus faucibus ornare. Mi bibendum neque egestas congue quisque egestas diam.",
+                image: "https://randomuser.me/api/portraits/women/50.jpg",
+                color: "blue"
+            },
+            {
+                name: "Cedrick Rhombuscus",
+                quote: "Rhoncus est pellentesque elit ullamcorper dignissim cras. Augue eget arcu dictum varius duis at consectetur. Id aliquet risus feugiat in ante metus. Ac auctor augue mauris augue neque gravida in. Fermentum dui faucibus in ornare quam. Urna cursus eget nunc scelerisque viverra mauris in aliquam sem. Lectus mauris ultrices eros in cursus turpis massa. Dictum fusce ut placerat orci nulla pellentesque dignissim enim sit.",
+                image: "https://randomuser.me/api/portraits/women/22.jpg",
+                color: "green"
+            },
+            {
+                name: "Dario Fallacialino",
+                quote: "Eu facilisis sed odio morbi quis commodo odio. Aliquet nec ullamcorper sit amet risus nullam. Donec et odio pellentesque diam volutpat. Lectus mauris ultrices eros in cursus turpis massa. Cursus turpis massa tincidunt dui ut ornare lectus sit amet. Feugiat pretium nibh ipsum consequat nisl vel pretium lectus quam. Et netus et malesuada fames ac turpis egestas integer. Nunc sed augue lacus viverra. Fermentum odio eu feugiat pretium nibh ipsum consequat.",
+                image: "https://randomuser.me/api/portraits/women/76.jpg",
+                color: "orange"
+            },
+            {
+                name: "Ebony Snow",
+                quote: "Feugiat in ante metus dictum at tempor commodo. Lorem ipsum dolor sit amet consectetur. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit. Tempus urna et pharetra pharetra massa massa ultricies mi. Hendrerit gravida rutrum quisque non tellus orci ac. Vitae auctor eu augue ut. Nunc eget lorem dolor sed viverra. Nulla at volutpat diam ut venenatis. Nulla porttitor massa id neque aliquam. Id eu nisl nunc mi ipsum faucibus vitae aliquet.",
+                image: "https://randomuser.me/api/portraits/men/17.jpg",
+                color: "red"
+            }
+        ]
+        const authors = document.querySelectorAll('.author'); 
+        const box = document.querySelector('.testimonials-container')
+        const text = document.querySelector('.text');
+        const name = document.querySelector('.name');
+        let selected = document.querySelector('.selected');
+        let authorImage = selected.querySelector('img').getAttribute('src');
+        let authorObject = authorList.find(o => o.image === authorImage);
+        box.style.backgroundColor = authorObject.color;
+        text.innerHTML = authorObject.quote;
+        name.innerHTML = authorObject.name;
+        authors.forEach(function(element) {
+            element.addEventListener('click', function(){
+                let selected = document.querySelector('.selected');
+                let authorImage = element.querySelector('img').getAttribute('src');
+                let authorObject = authorList.find(o => o.image === authorImage);
+                box.style.backgroundColor = authorObject.color;
+                text.innerHTML = authorObject.quote;
+                name.innerHTML = authorObject.name;
+                selected.classList.remove('selected');
+                element.classList.add('selected');
+            })
+        })
+    </script>
+</body>
+</html>
