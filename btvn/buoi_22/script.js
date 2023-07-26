@@ -281,14 +281,13 @@ function handleRemoveItem(id) {
 } */
 
 function handleSearch(){
-    let category = document.getElementById('search-category').value;
-    let minPrice = document.getElementsByClassName('min-price')[0].value;
-    let maxPrice = document.getElementsByClassName('max-price')[0].value;
-    let keyword = document.getElementsByClassName('keyword')[0].value;
-    console.log(minPrice, maxPrice)
+    let category = $('#search-category').val();
+    let minPrice = $('.min-price').val();
+    let maxPrice = $('.max-price').val();
+    let keyword = $('.keyword').val();
     filteredProducts = products.filter((elem) => elem.category === category);
     if(minPrice != '') filteredProducts = filteredProducts.filter((elem) => elem.price > minPrice);
     if(maxPrice != '') filteredProducts = filteredProducts.filter((elem) => elem.price < maxPrice);
-    filteredProducts = products.filter((elem) => elem.name.includes(keyword));
+    if(keyword) filteredProducts = filteredProducts.filter((elem) => elem.name.includes(keyword));
     renderUI(filteredProducts);
 }
