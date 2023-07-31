@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <header class="container">
+        <h1>Cart</h1>
+        <ul class="breadcrumb">
+            <li onclick="returnHome()">Home</li>
+            <li onclick="toCatalog()">Catalog</li>
+            <li>Cart</li>
+        </ul>
+        <!-- Total product -->
+        <span class="count"></span>
+    </header>
+    <section class="container">
+        <ul class="products" id="products">
+        </ul>
+    </section>
+    <section class="container">
+        <button class="checkout" onclick="toBill()">Proceed to Checkout</button>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script>
+        function returnHome(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/homepage.html";
+        }
+        function toCatalog(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/productList.html";
+        }
+        function toBill(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/billing.html";
+        }
+        
+        const saveData = (arrayname, array) =>{
+            localStorage.setItem(arrayname, JSON.stringify(array));
+        }
+
+        const getData = (array) =>{
+            const value = localStorage.getItem(array);
+            if (value){
+                return JSON.parse(value);
+            }
+            return [];
+        }
+
+        const products = document.querySelector('.products');
+
+        let changePriceAndQuantity = (id = null, voucher = null, voucherType = null) => {
+            let productQuantities = document.querySelectorAll('input.quantity');
+            let totalQuantity = document.querySelector('.count');
+
+            if(id){
+                let arrCart = getData("arrCart");
+                let cartProduct = arrCart.find((elem) => elem.id === id);
+                if(cartProduct) {
+                    cartProduct.quantity = parseInt($('input.quantity#'+id).val());
+                } else {
+                    let product = arrCart.find((elem) => elem.id === id);
+                    arrCart.push({
+                        id: product.id,
+                        name: product.name,
+                        description: product.description,
+                        category: product.category,
+                        price: product.price,
+                        quantity: parseInt($('input.quantity#'+id).val())
+                    })
+                }
+                saveData("arrCart", arrCart);
+            }
+        } 
+        
+        const removeProduct = (id) =>{
+            let arrCart = getData("arrCart");
+            let removedProduct = document.querySelector(`#row_${id}`);
+            removedProduct.parentElement.removeChild(removedProduct);
+            arrCart = arrCart.filter((elem) => elem.id != id);
+            changePriceAndQuantity(id);
+            saveData("arrCart", arrCart);
+        }
+
+        const renderUI = (arr = arrProducts) => {
+            let arrCart = getData("arrCart")
+            if(arr.length === 0) {
+                products.innerHTML += "No product is available currently";
+            } else {
+                arr.forEach((elem) => {
+                    products.innerHTML += `
+                        <li class="row" id="row_${elem.id}">
+                            <div class="col left" onclick="toDetailScreen(${elem.id})">
+                                <div class="thumbnail">
+                                    <a href="#">
+                                        <img src="https://via.placeholder.com/200x150" alt="" />
+                                    </a>
+                                </div>
+                                <div class="detail">
+                                    <div class="name"><a href="#">${elem.name}</a></div>
+                                    <div class="description">
+                                        ${elem.description}
+                                    </div>
+                                    <div class="price">$${elem.price}</div>
+                                </div>
+                            </div>
+                            <div class="col right">
+                                <div class="quantity">
+                                    <input type="number" id="${elem.id}" onchange='changePriceAndQuantity(${elem.id})' class="quantity" step="1" value="0" />
+                                </div>
+                                <div class="remove">
+                                    <span class="close" onclick='removeProduct(${elem.id})'><i class="fa fa-times" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                        </li>
+                    `;
+                })
+                arrCart.forEach((e) => {
+                    $('input.quantity#'+e.id).attr("value", e.quantity.toString());
+                })
+            }
+            
+            changePriceAndQuantity();
+        };
+
+        $(document).ready(function(){
+            let arrCart = getData("arrCart");
+            renderUI(arrCart);
+        });
+    </script>
+</body>
+</html>

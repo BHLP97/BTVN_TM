@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <header class="container">
+        <h1>Bill</h1>
+        <ul class="breadcrumb">
+            <li onclick="returnHome()">Home</li>
+            <li onclick="toCatalog()">Catalog</li>
+            <li onclick="toCart()">Cart</li>
+            <li>Bill</li>
+        </ul>
+    </header>
+    
+    <section class="option-container container">
+        <!-- Mã giảm giá -->
+        <div class="promotion">
+            <label for="promo-code">Have A Promo Code?</label>
+            <input type="text" id="promo-code" autocomplete="off" />
+            <button type="button" onclick="handleVoucher()"></button>
+        </div>
+        <div class="text-error" style="color: red"></div>
+
+        <!-- Tổng tiền -->
+        <div class="summary">
+            <ul>
+                <li class="subtotal">Subtotal <span class="total"></span></li>
+                <li class="vat">VAT<span>$5.00</span></li>
+                <li class="discount hide">Discount<span></span></li>
+                <li class="total">Total <span class="cart-total"></span></li>
+            </ul>
+        </div>
+    </section>
+    <section class="container">
+        <button class="buyout" onclick="handleBuyout()">Buy</button>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script>
+        function returnHome(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/homepage.html";
+        }
+        function toCatalog(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/productList.html";
+        }
+        function toCart(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/cart.html";
+        }
+
+        var vouchers = [
+            {
+                id: 1,
+                code: 'ABC',
+                value: 10,
+                type: 'percent'
+            },
+            {
+                id: 2,
+                code: 'XYZ',
+                value: 20,
+                type: 'dollar'
+            }
+        ];
+
+        let subtotalPrice = document.querySelector('.subtotal');
+        let vatPrice = document.querySelector('.vat > span').innerHTML.substr(1);
+        let discount = document.querySelector('.discount');
+        let discountPrice = document.querySelector('.discount > span');
+        let realPriceSpan = document.querySelector('.total > span');
+
+        const saveData = (arrayname, array) =>{
+            localStorage.setItem(arrayname, JSON.stringify(array));
+        }
+
+        const getData = (array) =>{
+            const value = localStorage.getItem(array);
+            if (value){
+                return JSON.parse(value);
+            }
+            return [];
+        }
+
+        const handlePrice = (voucher = null, voucherType = null) =>{
+            let sum = 0;
+            let totalPrice = 0;
+            let realPrice = 0;
+            arrCart = getData("arrCart");
+            arrCart.forEach(element => {
+                totalPrice += element.price * element.quantity;
+            });
+            subtotalPrice.innerHTML = "$" + totalPrice;
+            if (totalPrice > 100) {
+                realPrice = parseFloat(totalPrice) + parseFloat(vatPrice);
+            } else {
+                realPrice = parseFloat(totalPrice);
+            }
+            console.log(realPrice);
+            if(voucher){
+                if(voucherType == 'percent'){
+                    realPrice = parseFloat(realPrice - realPrice/voucher).toFixed(2);
+                } else {
+                    realPrice = parseFloat(realPrice - voucher).toFixed(2);
+                }
+            }
+            realPriceSpan.innerHTML = "$" + realPrice;
+        }
+        const handleVoucher = () =>{
+            code = document.getElementById('promo-code').value;
+            let res = vouchers.find(voucher => voucher.code === code);
+            if(res){
+                handlePrice(res.value, res.type);
+                discount.classList.remove('hide');
+                if(res.type == 'percent'){
+                    discountPrice.innerHTML = '%' + res.value;
+                } else {
+                    discountPrice.innerHTML = '$' + res.value;
+                }
+            } else {
+                alert('This voucher code does not exist')
+            }
+        }
+        const handleBuyout = () =>{
+            let arrUsers = getData("arrUsers");
+            let user = arrUsers.find((elem) => elem.id === 1);
+            let realPrice = document.querySelector('.total > span').innerHTML.substr(1);
+            user.wallet -= parseFloat(realPrice);
+            saveData("arrUsers", arrUsers);
+            saveData("arrCart", []);
+            returnHome();
+        }
+        $(document).ready(function(){
+            handlePrice();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Shopping Cart</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <main>
+        <header class="container">
+            <h1>Shopping Cart</h1>
+
+            <ul class="breadcrumb">
+                <li onclick="returnHome()">Home</li>
+                <li>Catalog</li>
+            </ul>
+            <!-- Total product -->
+            <span class="count"></span>
+        </header>
+        <section class="container">
+            <div class="category">
+                <select name="" id="search-category">
+                    <option value="Laptop">Laptop</option>
+                    <option value="Phone">Phone</option>
+                    <option value="Accessory">Accessory</option>
+                </select>
+            </div>
+            <div class="price">
+                <label for="">Min price: </label>
+                <input type="number" class="min-price">
+                <label for="">Max price: </label>
+                <input type="number" class="max-price">
+            </div>
+            <label for="">Keyword: </label>
+            <input type="text" class="keyword">
+            <div class="button-search">
+                <button onclick='handleSearch()'>Search</button>
+            </div>
+        </section>
+        
+
+        <section class="container">
+            <ul class="products" id="products">
+            </ul>
+        </section>
+
+        <section class="container">
+            <button class="checkout" onclick="toCart()">Proceed to Cart</button>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../products.js"></script> 
+    <script>
+        const products = document.querySelector('.products');
+
+        const saveData = (arrayname, array) =>{
+            localStorage.setItem(arrayname, JSON.stringify(array));
+        }
+
+        const getData = (array) =>{
+            const value = localStorage.getItem(array);
+            if (value){
+                return JSON.parse(value);
+            }
+            return [];
+        }
+        
+        let changePriceAndQuantity = (id = null, voucher = null, voucherType = null) => {
+            let productQuantities = document.querySelectorAll('input.quantity');
+            let totalQuantity = document.querySelector('.count');
+            let sum = 0;
+            let totalPrice = 0;
+            let realPrice = 0;
+
+            if(id){
+                let arrCart = getData("arrCart");
+                let cartProduct = arrCart.find((elem) => elem.id === id);
+                if(cartProduct) {
+                    cartProduct.quantity = parseInt($('input.quantity#'+id).val());
+                } else {
+                    let product = arrProducts.find((elem) => elem.id === id);
+                    arrCart.push({
+                        id: product.id,
+                        name: product.name,
+                        description: product.description,
+                        category: product.category,
+                        price: product.price,
+                        quantity: parseInt($('input.quantity#'+id).val())
+                    })
+                }
+                saveData("arrCart", arrCart);
+            }
+        } 
+        
+        
+        const handleVoucher = () =>{
+            code = document.getElementById('promo-code').value;
+            let res = vouchers.find(voucher => voucher.code === code);
+            console.log(res);
+            if(res == ''){
+                alert('This voucher code does not exist')
+            } else {
+                changePriceAndQuantity(null, res.value, res.type);
+            }
+        }
+        const renderUI = (arr = arrProducts) => {
+            let arrCart = getData("arrCart")
+            if(arr.length === 0) {
+                products.innerHTML += "No product is available currently";
+            } else {
+                arr.forEach((elem) => {
+                    products.innerHTML += `
+                        <li class="row" id="row_${elem.id}" onclick="toDetailScreen(${elem.id})">
+                            <div class="col left">
+                                <div class="thumbnail">
+                                    <a href="#">
+                                        <img src="https://via.placeholder.com/200x150" alt="" />
+                                    </a>
+                                </div>
+                                <div class="detail">
+                                    <div class="name"><a href="#">${elem.name}</a></div>
+                                    <div class="description">
+                                        ${elem.description}
+                                    </div>
+                                    <div class="price">$${elem.price}</div>
+                                </div>
+                            </div>
+                        </li>
+                    `;
+                })
+                arrCart.forEach((e) => {
+                    $('input.quantity#'+e.id).attr("value", e.quantity.toString());
+                })
+            }
+            changePriceAndQuantity();
+        }
+
+        function handleSearch(){
+            let category = $('#search-category').val();
+            let minPrice = $('.min-price').val();
+            let maxPrice = $('.max-price').val();
+            let keyword = $('.keyword').val();
+            filteredProducts = products.filter((elem) => elem.category === category);
+            if(minPrice != '') filteredProducts = filteredProducts.filter((elem) => elem.price > minPrice);
+            if(maxPrice != '') filteredProducts = filteredProducts.filter((elem) => elem.price < maxPrice);
+            if(keyword) filteredProducts = filteredProducts.filter((elem) => elem.name.includes(keyword));
+            renderUI(filteredProducts);
+        }
+
+        function returnHome(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/homepage.html";
+        }
+        function toDetailScreen(id){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/productDetail.html?id=" + id;
+        }
+        function toCart(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/cart.html";
+        }
+
+        $(document).ready(function(){
+            renderUI(arrProducts);
+        });
+    </script>
+</body>
+
+</html>

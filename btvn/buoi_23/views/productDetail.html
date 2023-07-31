@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <header class="container">
+        <h1>Shopping Cart</h1>
+        <ul class="breadcrumb">
+            <li onclick="returnHome()">Home</li>
+            <li onclick="toCatalog()">Catalog</li>
+            <li>Product</li>
+        </ul>
+    </header>
+    <section class="container">
+        <div class="product" id="product">
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../products.js"></script> 
+    <script>
+
+        function returnHome(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/homepage.html";
+        }
+        function toCatalog(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/productList.html";
+        }
+
+        const saveData = (arrayname, array) =>{
+            localStorage.setItem(arrayname, JSON.stringify(array));
+        }
+
+        const getData = (array) =>{
+            const value = localStorage.getItem(array);
+            if (value){
+                return JSON.parse(value);
+            }
+            return [];
+        }
+
+        function renderUI(){
+            let arrCart = getData("arrCart");
+            let urlParams = new URLSearchParams(window.location.search);
+            let myParam = urlParams.get('id');
+            let product = document.getElementById('product');
+            let elem = arrProducts.find((e) => e.id == myParam);
+            let elemCart = arrCart.find((e) => e.id == myParam);
+            product.innerHTML += `
+                <li class="row" id="row_${myParam}">
+                    <div class="col left">
+                        <div class="thumbnail">
+                            <a href="#">
+                                <img src="https://via.placeholder.com/200x150" alt="" />
+                            </a>
+                        </div>
+                        <div class="detail">
+                            <div class="name"><a href="#">${elem.name}</a></div>
+                            <div class="description">
+                                ${elem.description}
+                            </div>
+                            <div class="price">$${elem.price}</div>
+                        </div>
+                    </div>
+                    <div class="col right">
+                        <div class="quantity">
+                            <input type="number" id="${elem.id}" class="quantity" step="1" value="0" />
+                        </div>
+                        <button onclick="addToCart(${myParam})">Add to Cart</button>
+                    </div>
+                </li>
+            `;
+        }
+
+        let addToCart = (id) => {
+            if(id){
+                let arrCart = getData("arrCart");
+                let cartProduct = arrCart.find((elem) => elem.id === id);
+                if(cartProduct) {
+                    cartProduct.quantity += parseInt($('input.quantity#'+id).val());
+                } else {
+                    let product = arrProducts.find((elem) => elem.id === id);
+                    arrCart.push({
+                        id: product.id,
+                        name: product.name,
+                        description: product.description,
+                        category: product.category,
+                        price: product.price,
+                        quantity: parseInt($('input.quantity#'+id).val())
+                    })
+                }
+                saveData("arrCart", arrCart);
+            }
+        } 
+        
+        $(document).ready(function(){
+            renderUI();
+        });
+    </script>
+</body>
+</html>

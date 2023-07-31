@@ -13,13 +13,28 @@ let arrProducts = [
     }
 ];
 
+let vouchers = [
+    {
+        "id": 1,
+        "code": 'ABC',
+        "value": 10,
+        "type": 'percent'
+    },
+    {
+        "id": 2,
+        "code": 'DEF',
+        "value": 20,
+        "type": 'dollar'
+    }
+]
+
 const products = document.querySelector('.products');
 let subtotalPrice = document.querySelector('.subtotal');
 let vatPrice = document.querySelector('.vat > span').innerHTML.substr(1);
 let discountPrice = document.querySelector('.discount-.hide');
 let realPriceSpan = document.querySelector('.total > span');
 
-let changePriceAndQuantity = () => {
+let changePriceAndQuantity = (voucher = null, voucherType = null) => {
     let productQuantities = document.querySelectorAll('input.quantity');
     let totalQuantity = document.querySelector('.count');
     let sum = 0;
@@ -45,7 +60,20 @@ let changePriceAndQuantity = () => {
     totalPrice = parseFloat(totalPrice).toFixed(2);
     totalQuantity.innerHTML = `${sum} items in the bag`
     subtotalPrice.innerHTML = "$" + totalPrice; 
-    realPrice = parseFloat(totalPrice) + parseFloat(vatPrice); // - discountPrice.value;
+    if (totalPrice > 100) {
+        realPrice = parseFloat(totalPrice) + parseFloat(vatPrice);
+    } else {
+        realPrice = parseFloat(totalPrice);
+    }
+    console.log(voucher, realPrice);
+    if(voucher){
+        if(voucherType == 'percent'){
+            realPrice = parseFloat(realPrice - realPrice/voucher).toFixed(2);
+        } else {
+            realPrice = parseFloat(realPrice - voucher).toFixed(2);
+        }
+        console.log(voucher, realPrice);
+    }
     realPriceSpan.innerHTML = "$" + realPrice;
 } 
 const removeProduct = (id) =>{
@@ -53,6 +81,15 @@ const removeProduct = (id) =>{
     removedProduct.parentElement.removeChild(removedProduct);
     arrProducts = arrProducts.filter((elem) => elem.id != id);
     changePriceAndQuantity();
+}
+const handleVoucher = () =>{
+    code = document.getElementById('promo-code').value;
+    let res = vouchers.find(voucher => voucher.code === code);
+    if(res == ''){
+        alert('This voucher code does not exist')
+    } else {
+        changePriceAndQuantity(res.value, res.type);
+    }
 }
 const renderUI = (arr) => {
     if(arr.length === 0) {

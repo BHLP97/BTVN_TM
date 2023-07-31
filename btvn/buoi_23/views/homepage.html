@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Nunito+Sans:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <main>
+        <header class="container">
+            <h1>Homepage</h1>
+            <ul class="breadcrumb">
+                <li>Home</li>
+            </ul>
+        </header>
+        <section class="container">
+            <div class="wallet"></div>
+        </section>
+        <section class="container">
+            <button onclick="toCatalog()">Go to the catalog list</button>
+            <button onclick="toCart()">Go to the cart</button>
+            <button onclick="toBilling()">Go to the checkout</button>
+        </section>
+        
+    </main>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script>
+        function toCatalog(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/productList.html";
+        }
+        function toCart(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/cart.html";
+        }
+        function toBilling(){
+            window.location = "http://127.0.0.1:5500/btvn/buoi_23/views/billing.html";
+        }
+
+        const getData = (array) =>{
+            const value = localStorage.getItem(array);
+            if (value){
+                return JSON.parse(value);
+            }
+            return [];
+        }
+
+        $(document).ready(function(){
+            let arrUsers = getData("arrUsers");
+            let user = arrUsers.find((elem) => elem.id === 1);
+            let userWallet = user.wallet;
+            $('.wallet').html('Wallet: '+ userWallet +'$');
+        });
+    </script>
+</body>
+</html>
