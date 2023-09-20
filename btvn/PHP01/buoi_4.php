@@ -78,10 +78,8 @@ function findPairsWithSum($arr, $sum) {
     $n = count($arr);
     $newArray = [];
     while ($k != $n){
-        for($i=$k; $i<$n-$k; $i++) {
-            if($arr[$k] + $arr[$k+$i] == $sum) array_push($newArray, [$arr[$k], $arr[$k+$i]], [$arr[$k+$i], $arr[$k]]);
-            echo $arr[$k];
-            echo $arr[$k+$i];
+        for($i=$k; $i<$n-1; $i++) {
+            if($arr[$k] + $arr[$k+($n-$i)-1] == $sum) array_push($newArray, [$arr[$k], $arr[$k+($n-$i)-1]], [$arr[$k+($n-$i)-1], $arr[$k]]);
             print_r("<br>");
         }
         $k += 1;
