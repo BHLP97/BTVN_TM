@@ -80,7 +80,6 @@ function findPairsWithSum($arr, $sum) {
     while ($k != $n){
         for($i=$k; $i<$n-1; $i++) {
             if($arr[$k] + $arr[$k+($n-$i)-1] == $sum) array_push($newArray, [$arr[$k], $arr[$k+($n-$i)-1]], [$arr[$k+($n-$i)-1], $arr[$k]]);
-            print_r("<br>");
         }
         $k += 1;
     }
@@ -91,14 +90,14 @@ $input = [2, 4, 3, 5, 6, 1, 7];
 $targetSum = 7;
 $result = findPairsWithSum($input, $targetSum);
 print_r($result); // Kết quả: [[2, 5], [4, 3], [3, 4], [5, 2], [6, 1], [1, 6]]
+print_r("<br>");
 
 function findMostFrequentElement($arr) {
-    $newArray = [];
-    for($i=0; $i<count($arr); $i++) {
-
-    }
+    $arrayFrequencies = array_count_values($arr);
+    arsort($arrayFrequencies, SORT_NUMERIC);
+    return array_key_first($arrayFrequencies);
 }
 // Sử dụng
 $input = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4];
 $result = findMostFrequentElement($input);
-echo $result; // Kết quả: 4
+echo($result); // Kết quả: 4
