@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <title>Weather Page</title>
+</head>
+<body>
+    <div class="main bg-info vh-100">
+        <div class="container col-6 pt-5 d-flex flex-column align-items-center ">
+            <div class="title text-center fs-1 fw-bold text-danger mb-5">Weather Informations</div>
+            <select class="form_select w-75 bg-primary text-white border-0 p-2 mb-5 " onchange="callWeatherApi()" id="selectCity">
+                <option value="Hanoi">TP Hà Nội</option>
+                <option value="Ho Chi Minh City">TP Hồ Chí Minh</option>
+            </select>
+            <div class="weather-card w-75 align-middle bg-primary rounded p-5 text-white">
+                <div class="row p-3">
+                    <div class="weather-icon col-4">
+                        <img src="" id="weather-icon" class="img-fluid mh-100 rounded-top" alt="">
+                    </div>
+                    <div class="d-flex flex-column align-items-end col-8 ">
+                        <div id='city-name' class="city-name">
+                            Hanoi
+                        </div>
+                        <div class="date">
+                            27/10/2023
+                        </div>
+                    </div>
+                </div>
+                <div class="display-3 fw-bold text-center" id="temperature">
+                    
+                </div>
+                <div class="fs-6 text-center pb-3" id="weather-desc">
+                    
+                </div>
+                <div class="row d-flex flex-fill">
+                    <div class="d-flex col-6">
+                        <div class="col-6">
+                            <div class=""></div>
+                            <div class="">
+                                Cảm nhận
+                            </div>
+                        </div>
+                        <div class="col-6" id="temperature-felt">
+                            
+                        </div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <div class="col-6">
+                           <div class=""></div>
+                            <div class="">
+                                Tốc độ gió
+                            </div> 
+                        </div>
+                        <div class="col-6" id="wind-speed">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex flex-fill">
+                    <div class="d-flex col-6">
+                        <div class="col-6">
+                            <div class=""></div>
+                            <div class="">
+                                Độ ẩm
+                            </div>
+                        </div>
+                        <div class="col-6" id="humidity">
+                            
+                        </div>
+                    </div>
+                    <div class="d-flex col-6">
+                        <div class="col-6">
+                            <div class=""></div>
+                            <div class="">
+                                Áp lực k.khí
+                            </div>
+                        </div>
+                        <div class="col-6" id="air">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        const OPEN_WEATHER_KEY = 'bfb644605b8f6b9437fa20fe5f369dd1';
+        const OPEN_WEATHER_API= "https://api.openweathermap.org/data/2.5/weather?";
+        const cities = [
+            {name: "Hanoi",
+            lat: 20.991671,
+            long: 105.800483},
+            {name: "Ho Chi Minh City",
+            lat: 10.762622,
+            long: 106.660172}
+        ]
+        const findCity = (city) => {
+            return cities.filter((e) => {
+                if (e.name == city) return e;
+            })
+        }
+        function callWeatherApi(){
+            citySelected = findCity(document.getElementById("selectCity").value);
+            $('#city-name').text(citySelected[0].name);
+            const apiUrl = `${OPEN_WEATHER_API}lat=${citySelected[0].lat}&lon=${citySelected[0].long}&appid=${OPEN_WEATHER_KEY}`
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                dataType: 'json',
+                success:function(response){
+                    $('#temperature').text((response.main.temp-273.15).toFixed(1)+"°C");
+                    $('#weather-desc').text(response.weather[0].description);
+                    $('#temperature-felt').text((response.main.feels_like-273.15).toFixed(1)+"°C");
+                    $('#wind-speed').text(response.wind.speed+" m/s");
+                    $('#humidity').text(response.main.humidity+" %");
+                    $('#air').text(response.main.pressure+" hPa");
+                    $('#weather-icon').attr('src',"https://openweathermap.org/img/wn/"+response.weather[0].icon+'.png');
+                },
+                error: function(response){
+                    console.log(response);
+                }
+            })
+        }
+        callWeatherApi();
+    </script>
+</body>
+</html>
